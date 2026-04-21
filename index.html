@@ -1,41 +1,160 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TarunaNusantaraStore</title>
+<title>TarunaNusantaraStore Pro</title>
 <style>
 body{
-font-family:Arial;
+margin:0;
+font-family:Arial,sans-serif;
 background:#0d47a1;
 color:white;
+}
+header{
+padding:20px;
 text-align:center;
-padding:40px;
+font-size:28px;
+font-weight:bold;
+background:#08306b;
+}
+.container{
+padding:15px;
+max-width:900px;
+margin:auto;
 }
 .card{
 background:white;
 color:#222;
-padding:20px;
-border-radius:15px;
-max-width:400px;
-margin:auto;
+padding:18px;
+border-radius:14px;
+margin-bottom:15px;
+box-shadow:0 4px 10px rgba(0,0,0,.2);
+}
+h2{margin-top:0}
+input{
+width:100%;
+padding:10px;
+margin:6px 0;
+border-radius:8px;
+border:1px solid #ccc;
+box-sizing:border-box;
 }
 button{
-padding:12px 20px;
+padding:12px;
 border:none;
 background:#0d47a1;
 color:white;
 border-radius:10px;
-font-size:18px;
+font-size:16px;
+width:100%;
+margin-top:8px;
+}
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+.stat{
+background:#1565c0;
+padding:15px;
+border-radius:12px;
+text-align:center;
+}
+.small{font-size:14px;opacity:.9}
+.big{font-size:24px;font-weight:bold}
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+}
+td,th{
+padding:8px;
+border-bottom:1px solid #ddd;
+text-align:left;
+font-size:14px;
 }
 </style>
 </head>
 <body>
-<h1>TarunaNusantaraStore</h1>
+
+<header>TarunaNusantaraStore PRO</header>
+
+<div class="container">
+
 <div class="card">
-<h2>Perlengkapan Taruna Nusantara</h2>
-<p>Kasir • Gudang • Owner • Shopee</p>
-<button onclick="alert('Login Segera Hadir')">Masuk</button>
+<h2>🧾 Kasir</h2>
+<input type="text" id="nama" placeholder="Nama Produk">
+<input type="number" id="harga" placeholder="Harga">
+<input type="number" id="qty" placeholder="Qty">
+<button onclick="tambah()">Tambah Transaksi</button>
+
+<p><b>Total: Rp <span id="total">0</span></b></p>
+
+<table id="list">
+<tr><th>Produk</th><th>Total</th></tr>
+</table>
 </div>
+
+<div class="card">
+<h2>👑 Dashboard Owner</h2>
+<div class="grid">
+<div class="stat">
+<div class="small">Omzet Hari Ini</div>
+<div class="big" id="omzet">0</div>
+</div>
+<div class="stat">
+<div class="small">Transaksi</div>
+<div class="big" id="trx">0</div>
+</div>
+<div class="stat">
+<div class="small">Produk Terjual</div>
+<div class="big" id="produk">0</div>
+</div>
+<div class="stat">
+<div class="small">Status</div>
+<div class="big">Aktif</div>
+</div>
+</div>
+</div>
+
+</div>
+
+<script>
+let omzet=0;
+let trx=0;
+let produk=0;
+
+function tambah(){
+let nama=document.getElementById("nama").value;
+let harga=parseInt(document.getElementById("harga").value)||0;
+let qty=parseInt(document.getElementById("qty").value)||0;
+
+if(nama=="" || harga==0 || qty==0){
+alert("Isi data lengkap");
+return;
+}
+
+let total=harga*qty;
+
+omzet+=total;
+trx+=1;
+produk+=qty;
+
+document.getElementById("total").innerText=total.toLocaleString();
+document.getElementById("omzet").innerText=omzet.toLocaleString();
+document.getElementById("trx").innerText=trx;
+document.getElementById("produk").innerText=produk;
+
+let row=document.createElement("tr");
+row.innerHTML="<td>"+nama+"</td><td>Rp "+total.toLocaleString()+"</td>";
+document.getElementById("list").appendChild(row);
+
+document.getElementById("nama").value="";
+document.getElementById("harga").value="";
+document.getElementById("qty").value="";
+}
+</script>
+
 </body>
-</html>
+  </html>
